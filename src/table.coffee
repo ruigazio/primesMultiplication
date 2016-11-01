@@ -46,7 +46,7 @@ console.time 'table'
 #table 3636
 #drastic slowdown
 #table 3637
-console.log table 11
+#console.log table 11
 console.timeEnd 'table'
 
 module.exports = table
