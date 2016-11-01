@@ -1,0 +1,20 @@
+td {
+  border-top-style: solid;
+  border-left-style: solid;
+  border-width: 1px;
+  padding: 0.2em;
+}
+
+
+tr:nth-child(2n+3) {
+  background-color: cyan;
+}
+
+td:nth-child(2n+3) {
+  background-color: gray;
+}
+
+tr:first-child, td:first-child {
+  font-weight: bold;
+  background-color: beige;
+}

@@ -18,5 +18,6 @@ buildTable = (table) ->
 	node
 
 document.addEventListener 'DOMContentLoaded', ->
-	document.body.appendChild buildTable tableGenerator 71
+	$container = document.querySelector '#container'
+	$container.appendChild buildTable tableGenerator 71
 , false

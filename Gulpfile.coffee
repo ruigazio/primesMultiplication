@@ -1,7 +1,8 @@
-gutil = require 'gutil'
-gulp = require 'gulp'
-coffee = require 'gulp-coffee'
-replace = require 'gulp-replace'
+gutil            = require 'gutil'
+gulp             = require 'gulp'
+coffee           = require 'gulp-coffee'
+replace          = require 'gulp-replace'
+concat           = require 'gulp-concat'
 webpack          = require 'webpack'
 webpackDevServer = require "webpack-dev-server"
 
@@ -19,6 +20,11 @@ gulp.task 'html', ->
 	gulp.src 'src/*.html'
 		.pipe gulp.dest 'dist/'
 
+gulp.task 'css', ->
+	gulp.src 'src/*.css'
+		.pipe concat "bundle.css"
+		.pipe gulp.dest 'dist/'
+
 gulp.task 'tests', ['default'], ->
 	gulp.src './test/*.coffee'
 	.pipe(coffee({bare: true}).on('error', gutil.log))
@@ -30,7 +36,7 @@ gulp.task 'tests', ['default'], ->
 
 gulp.task 'default', ['webpack-dev-server']
 
-gulp.task "webpack-dev-server", ['coffee','js', 'html'], ->
+gulp.task "webpack-dev-server", ['coffee','js', 'html', 'css'], ->
 	myConfig = require './webpack.config.coffee'
 	gulp.watch ["src/**/*.css"], ['css']
 	gulp.watch ["src/**/*.html"], ['html']
