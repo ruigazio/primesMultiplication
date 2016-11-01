@@ -9,7 +9,7 @@ table = (n) ->
 		currentLine = matrix[i]
 		currentLine.push a*a
 		j = i+1
-		while j < tableSize
+		while j <= tableSize
 			[a,b] = list.shift()
 			m = a * b
 			currentLine.push m
@@ -20,30 +20,24 @@ table = (n) ->
 
 	listPrimes = prime.eratosthenes n
 	tableSize = listPrimes.length
-	last = tableSize - 1
-	lastPrime = listPrimes[last]
+	lastPrime = listPrimes[tableSize - 1]
 	console.log 'tableSize', tableSize
-	list = permutation listPrimes
+	list = permutation listPrimes.slice()
 
-	i=0
-	matrix = []
+	header = [0]
+	matrix = [header]
+	listPrimes.forEach (p) ->
+		header.push p
+		matrix.push [p]
 
+	i=1
 	while i < tableSize
-		matrix.push []
-		i++
-
-	i=0
-	while i < last
 		#console.time i
 		fill i
 		#console.timeEnd i
 		i++
 
-	matrix[last].push lastPrime * lastPrime
-	#console.log 'matrix', matrix
-	#console.log 'perms', perms
-	#console.log 'last prime', b
-	#console.log 'last factor', matrix[limit][limit]
+	matrix[tableSize].push lastPrime * lastPrime
 	matrix
 	
 
