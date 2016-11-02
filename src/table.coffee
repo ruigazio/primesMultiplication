@@ -19,9 +19,9 @@ table = (n) ->
 		p
 	## END FUNCTIONS ##
 
-	console.time 'eratosthenes '
-	listPrimes = prime.eratosthenes n
-	console.timeEnd 'eratosthenes '
+	console.time 'divisor'
+	listPrimes = prime.divisor n
+	console.timeEnd 'divisor'
 	tableSize = listPrimes.length
 	console.log 'tableSize', tableSize
 	lastPrime = listPrimes[tableSize - 1]

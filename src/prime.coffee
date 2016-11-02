@@ -1,24 +1,26 @@
 divisor = (n) ->
 	## FUNCTIONS ##
-	isPrime = (n) ->
-		pList = allLowerPrimes.slice()
-		nextPrime = pList.shift()
+	isPrime = (c) ->
+		i=0
+		nextPrime = allLowerPrimes[i]
 		prime = true
-		sqRooted = Math.sqrt n
-		while pList.length && nextPrime <= sqRooted
-			if !( n % nextPrime)
+		sqRooted = Math.sqrt c
+		while nextPrime <= sqRooted
+			if !( c % nextPrime)
 				prime = false
 				break
-			nextPrime = pList.shift()
+			nextPrime = allLowerPrimes[++i]
 		return prime
 
 	## END FUNCTIONS ##
 
 	allLowerPrimes = [2]
 	i = 3
-	while i <= n
-		if isPrime i, allLowerPrimes
+	primeCount = 1
+	while primeCount < n
+		if isPrime i
 			allLowerPrimes.push i
+			primeCount++
 		i++
 
 	return allLowerPrimes
