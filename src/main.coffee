@@ -1,23 +1,50 @@
 tableGenerator = require "./table.coffee"
 
 
-buildLine = (line) ->
-	node = document.createElement 'tr'
-	line.forEach (p) ->
-		td = document.createElement 'td'
-		text = document.createTextNode p
-		td.appendChild text
-		node.appendChild td
-	node
+renderer = (domTarget, table) ->
+	## FUNCTIONS ##
+	buildLine = (line) ->
+		node = document.createElement 'tr'
+		line.forEach (p) ->
+			td = document.createElement 'td'
+			text = document.createTextNode p
+			td.appendChild text
+			node.appendChild td
+		node
 
 
-buildTable = (table) ->
-	node = document.createElement 'table'
-	table.forEach (line) ->
-		node.appendChild buildLine line
-	node
+	buildDomTable = () ->
+		node = document.createElement 'table'
+		table.forEach (line) ->
+			node.appendChild buildLine line
+		node
+	## END FUNCTIONS ##
+
+	domTarget.innerHTML = ''
+
+	console.time 'render'
+	$table = buildDomTable table
+	console.timeEnd 'render'
+
+	domTarget.appendChild $table
+
+updater = (renderer, n) ->
+	renderer produceTable n
+
+produceTable = (n) ->
+	console.log 'starting with N: ' + n
+	table = tableGenerator n
+	table
 
 document.addEventListener 'DOMContentLoaded', ->
-	$container = document.querySelector '#container'
-	$container.appendChild buildTable tableGenerator 71
+	$table = document.querySelector '#table'
+	$input = document.querySelector '#primesLimit'
+	render = renderer.bind this, $table
+	update = updater.bind this, render
+	update 3
+	$input.addEventListener 'change', (e) ->
+		console.log 'Input changed'
+		update e.target.value
+	, false
 , false
+

@@ -44,6 +44,11 @@ eratosthenes = (n) ->
 	
 	return primes
 
+#console.time 'eratosthenes'
+#eratosthenes 1000000
+#divisor 100000
+#console.timeEnd 'eratosthenes'
+
 module.exports =
 	divisor: divisor
 	eratosthenes: eratosthenes

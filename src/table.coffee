@@ -18,12 +18,18 @@ table = (n) ->
 		null
 	## END FUNCTIONS ##
 
+	console.time 'eratosthenes '
 	listPrimes = prime.eratosthenes n
+	console.timeEnd 'eratosthenes '
 	tableSize = listPrimes.length
-	lastPrime = listPrimes[tableSize - 1]
 	console.log 'tableSize', tableSize
-	list = permutation listPrimes.slice()
+	lastPrime = listPrimes[tableSize - 1]
 
+	console.time 'permutations '
+	list = permutation listPrimes
+	console.timeEnd 'permutations '
+
+	console.time 'table'
 	header = [0]
 	matrix = [header]
 	listPrimes.forEach (p) ->
@@ -38,15 +44,14 @@ table = (n) ->
 		i++
 
 	matrix[tableSize].push lastPrime * lastPrime
+	console.timeEnd 'table'
 	matrix
 	
 
-console.time 'table'
 #OK
 #table 3636
 #drastic slowdown
 #table 3637
 #console.log table 11
-console.timeEnd 'table'
 
 module.exports = table
