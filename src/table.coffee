@@ -4,18 +4,19 @@ prime = require "./prime.coffee"
 
 table = (n) ->
 	## FUNCTIONS ##
-	fill = (i) ->
-		[a,b] = list[0]
+	fill = (i, p) ->
+		[a,b] = list[p]
 		currentLine = matrix[i]
 		currentLine.push a*a
 		j = i+1
 		while j <= tableSize
-			[a,b] = list.shift()
+			[a,b] = list[p]
 			m = a * b
 			currentLine.push m
 			matrix[j].push m
 			j++
-		null
+			p++
+		p
 	## END FUNCTIONS ##
 
 	console.time 'eratosthenes '
@@ -37,10 +38,9 @@ table = (n) ->
 		matrix.push [p]
 
 	i=1
+	p = 0
 	while i < tableSize
-		#console.time i
-		fill i
-		#console.timeEnd i
+		p = fill i, p
 		i++
 
 	matrix[tableSize].push lastPrime * lastPrime
@@ -49,9 +49,10 @@ table = (n) ->
 	
 
 #OK
-#table 3636
+#  table 3636
+#  table 3406
 #drastic slowdown
-#table 3637
-#console.log table 11
+#  table 3637
+#  table 3407
 
 module.exports = table

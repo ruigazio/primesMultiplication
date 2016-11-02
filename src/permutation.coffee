@@ -1,18 +1,22 @@
 perm = (list) ->
 	## FUNCTIONS ##
-	pair = (i, accum, n) ->
-		accum.push [i, n]
-		return accum
+	pair = (p, i) ->
+		while i < size
+			a = list[i]
+			accum.push [p, a]
+			i++
 	## END FUNCTIONS ##
 
 	accum = []
-	l =  list.slice()
+	size = list.length
 
-	p = l.shift()
-	while l.length
-		pairHead = pair.bind this, p
-		l.reduce pairHead, accum
-		p = l.shift()
+	i = 1
+	j = 0
+	while i < size
+		p = list[j]
+		pair p, i
+		i++
+		j++
 	accum
-		
+
 module.exports = perm
