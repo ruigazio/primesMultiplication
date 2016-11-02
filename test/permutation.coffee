@@ -1,4 +1,4 @@
-permutation = require "../../build/permutation.js"
+permutation = require "../../dist/permutation.js"
 
 factorial = (n) ->
 	if n == 1

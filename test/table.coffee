@@ -1,3 +1,3 @@
-table = require "../../build/table.js"
+table = require "../../dist/table.js"
 
 console.log table 5

@@ -1,9 +1,9 @@
 #! /usr/bin/node
 
 var files = {
-  prime: './test/build/prime.js',
-  permutation: './test/build/permutation.js',
-  table: './test/build/table.js'
+  prime: './test/dist/prime.js',
+  permutation: './test/dist/permutation.js',
+  table: './test/dist/table.js'
 };
 
 function testAll(){

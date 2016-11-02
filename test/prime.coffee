@@ -1,5 +1,5 @@
 knownPrimes = require "./knownPrimes.js"
-genPrimes = require "../../build/prime.coffee"
+genPrimes = require "../../dist/prime.coffee"
 
 test = (name, n) ->
 	arrayEqual = (a,b) ->
