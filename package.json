@@ -14,7 +14,8 @@
     "babel-loader": "",
     "css-loader": "~0.9.0",
     "webpack": "",
-    "webpack-dev-server": "~1.10.0"
+    "webpack-dev-server": "~1.10.0",
+    "string-builder": "~0.1.4"
   },
   "engines": {
     "node": ">=0.10.0"
