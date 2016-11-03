@@ -1,26 +1,31 @@
 knownPrimes = require "./knownPrimes.js"
-genPrimes = require "../src/prime.coffee"
+primeGenerator = require "../src/prime.coffee"
 
-test = (name, n) ->
+compareUsing = (name, n) ->
 	matchWithKnown = (a) ->
 		i = 0
 		while i < a.length && a[i] == firstMillion[i]
 			i++
 		return i == a.length
 
-	if n > knownPrimes.length
-		console.log 'over the limit'
-		return n
-
 	firstMillion = knownPrimes.firstMillion
-	method = eval 'genPrimes' + '.' + name
+	method = eval 'primeGenerator' + '.' + name
 	console.time name
 	result = method n
 	console.timeEnd name
-	if matchWithKnown result
-		console.log 'OK'
-	else
-		console.log 'FAIL'
+	matchWithKnown result
 
-test 'divisor', 1000000
-#test 'eratosthenes', knownPrimes.upperBound
+test = (args) ->
+	if args.length > 1
+		n = args[1]
+		if n > knownPrimes.upperIndex + 1
+			console.log 'over the limit'
+			return n
+		ok = compareUsing 'divisor', n
+	else
+		console.log 'testing the first million'
+		ok = compareUsing 'divisor', 1000000
+
+	console.log if ok then 'OK' else 'FAIL'
+
+module.exports = test

@@ -6,7 +6,7 @@ StringBuilder = require 'string-builder'
 writeFile = (fileName, buf) ->
 	FileSystem.writeFile fileName, buf, (err) =>
 		err && throw err
-		console.log 'File saved'
+		console.log "File '#{fileName}' saved"
 
 toStringBuffer = (matrix) ->
 	line = (l) ->
@@ -35,4 +35,10 @@ toCsv = (n) ->
 	writeFile 'table.csv', b
 	console.timeEnd  'write file'
 
-module.exports = toCsv
+doTest = (args) ->
+	if args.length > 1
+		toCsv args[1]
+	else
+		toCsv 100
+
+module.exports = doTest

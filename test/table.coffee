@@ -1,25 +1,29 @@
-table = require "../../dist/table.js"
+table = require "../src/table.coffee"
 
-# testLines [n, expectedSize, expectedBottomRight]
+# testLines [n, expectedBottomRight]
 tests = [
-	[11, 6, 121]
-	, [17, 8, 289]
-	, [50, 16, 2209]
+	[11, 961]
+	, [17, 3481]
+	, [50, 52441]
 ]
 
-tests.forEach ([n, expectedSize, expectedBottomRight]) ->
-	matrix = table n
+all = ->
+	tests.forEach ([n, expectedBottomRight]) ->
+		matrix = table n
 
-	tableSize = matrix.length
-	lastIdx = tableSize - 1
+		conditions = [
+			matrix.length == n + 1
+			, matrix[n].length == n + 1
+			, matrix[n][n] == expectedBottomRight
+		]
 
-	conditions = [ tableSize == expectedSize
-		, matrix[lastIdx].length == expectedSize
-		, matrix[lastIdx][lastIdx] == expectedBottomRight
-	]
+		ok = conditions.every (passed) -> passed
+		console.info if ok then 'OK' else 'FAIL'
 
-	all = conditions.every (passed) -> passed
-	if all
-		console.info 'OK'
+doTest = (args) ->
+	if args.length > 1
+		console.log table args[1]
 	else
-		console.info 'FAIL'
+		all()
+
+module.exports = doTest

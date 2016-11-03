@@ -1,4 +1,4 @@
-permutation = require "../../dist/permutation.js"
+permutation = require "../src/permutation.coffee"
 
 factorial = (n) ->
 	if n == 1
@@ -27,12 +27,19 @@ permNoRep = (n,p) ->
 		return 1
 	(factorialx n, p) / (factorial p)
 
-test = (n) ->
+matchLength = (n) ->
 	combs = permNoRep n, 2
 	console.log 'combinations', combs
 	console.time 'result'
 	result = permutation [1..n]
 	console.timeEnd 'result'
-	console.log result.length == combs
+	result.length == combs 
 
-test 5000
+doTest = (args) ->
+	if args.length > 1
+		ok = matchLength args[1]
+	else
+		ok = matchLength 3000
+	console.log if ok then 'OK' else 'FAIL'
+
+module.exports = doTest

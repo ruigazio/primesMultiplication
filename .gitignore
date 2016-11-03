@@ -2,5 +2,4 @@ test/dist
 dist
 node_modules
 npm-debug.log
-test/table.csv
-
+table.csv
