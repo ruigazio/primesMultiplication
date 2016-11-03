@@ -1,7 +1,7 @@
 tableGenerator = require "./table.coffee"
 
 
-renderer = (domTarget, table) ->
+renderer = (table) ->
 	## FUNCTIONS ##
 	buildLine = (line) ->
 		node = document.createElement 'tr'
@@ -12,7 +12,6 @@ renderer = (domTarget, table) ->
 			node.appendChild td
 		node
 
-
 	buildDomTable = () ->
 		node = document.createElement 'table'
 		table.forEach (line) ->
@@ -20,35 +19,32 @@ renderer = (domTarget, table) ->
 		node
 	## END FUNCTIONS ##
 
-	domTarget.innerHTML = ''
-
 	console.time 'render'
-	$table = buildDomTable table
+	tableNode = buildDomTable table
 	console.timeEnd 'render'
+	tableNode
 
-	domTarget.appendChild $table
 
-updater = (renderer, n) ->
-	mark = performance.now()
-	setTimeout () ->
-		time = performance.now() - mark
-		console.log 'browser', time
-	renderer produceTable n
-
-produceTable = (n) ->
+updater = ($domTarget, $rendering, renderer, n) ->
+	$rendering.style.visibility='visible'
 	console.info 'starting with N: ' + n
-	table = tableGenerator n
-	table
+	setTimeout () ->
+		tableNode = renderer tableGenerator n
+		console.time 'browser'
+		setTimeout () ->
+			$rendering.style.visibility='hidden'
+			console.timeEnd 'browser'
+
+		$domTarget.innerHTML = ''
+		$domTarget.appendChild tableNode
+	, 15
 
 document.addEventListener 'DOMContentLoaded', ->
-	$table = document.querySelector '#table'
-	$input = document.querySelector '#primesLimit'
-	render = renderer.bind this, $table
-	update = updater.bind this, render
+	$table = document.querySelector 'div#table'
+	$input = document.querySelector 'input#primesLimit'
+	$rendering = document.querySelector 'span#rendering'
+	update = updater.bind this, $table, $rendering, renderer
 	update 3
 	$input.addEventListener 'change', (e) ->
 		console.info 'input changed'
 		update e.target.value
-	, false
-, false
-

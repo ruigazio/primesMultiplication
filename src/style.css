@@ -1,8 +1,11 @@
+span#rendering {
+  color: lightgray;
+}
+
 td {
   padding: 0.2em;
   text-align: center;
 }
-
 
 tr:nth-child(2n+3) {
   background-color: lightgray;
