@@ -2,7 +2,7 @@ permutation = require "./permutation.coffee"
 prime = require "./prime.coffee"
 
 
-table = (n) ->
+table = (tableSize) ->
 	## FUNCTIONS ##
 	fill = (i, p) ->
 		[a,b] = list[p]
@@ -20,10 +20,8 @@ table = (n) ->
 	## END FUNCTIONS ##
 
 	console.time 'divisor'
-	listPrimes = prime.divisor n
+	listPrimes = prime.divisor tableSize
 	console.timeEnd 'divisor'
-	tableSize = listPrimes.length
-	console.log 'tableSize', tableSize
 	lastPrime = listPrimes[tableSize - 1]
 
 	console.time 'permutations '

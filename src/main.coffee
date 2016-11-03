@@ -29,10 +29,14 @@ renderer = (domTarget, table) ->
 	domTarget.appendChild $table
 
 updater = (renderer, n) ->
+	mark = performance.now()
+	setTimeout () ->
+		time = performance.now() - mark
+		console.log 'browser', time
 	renderer produceTable n
 
 produceTable = (n) ->
-	console.log 'starting with N: ' + n
+	console.info 'starting with N: ' + n
 	table = tableGenerator n
 	table
 
@@ -43,7 +47,7 @@ document.addEventListener 'DOMContentLoaded', ->
 	update = updater.bind this, render
 	update 3
 	$input.addEventListener 'change', (e) ->
-		console.log 'Input changed'
+		console.info 'input changed'
 		update e.target.value
 	, false
 , false
