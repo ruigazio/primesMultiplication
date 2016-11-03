@@ -1,44 +1,44 @@
 prime = require "./prime.coffee"
 
-
 table = (tableSize) ->
 	## FUNCTIONS ##
 	fill = (i) ->
-		a = listPrimes[i]
-		i++
-
+		a = listPrimes[i++]
+		colIdx = i
 		currentLine = matrix[i]
-		currentLine.push a*a
+		currentLine[i] = a*a
 
-		j = i + 1
 		while i < tableSize
-			b = listPrimes[i]
+			b = listPrimes[i++]
 			m = a * b
-			currentLine.push m
-			matrix[j].push m
-			i++
-			j++
+			currentLine[i] = m
+			matrix[i][colIdx] = m
 		null
 	## END FUNCTIONS ##
 
 	console.time 'divisor'
 	listPrimes = prime.divisor tableSize
 	console.timeEnd 'divisor'
-	lastPrime = listPrimes[tableSize - 1]
 
 	console.time 'table'
-	header = [0]
-	matrix = [header]
-	listPrimes.forEach (p) ->
-		header.push p
-		matrix.push [p]
+	lineSize = tableSize + 1
+	matrix = new Array lineSize
+	matrix[0] = new Array lineSize
+	header = matrix[0]
+	header[0] = ' '
+	i=0
+	while i < tableSize
+		p = listPrimes[i++]
+		header[i] = p
+		matrix[i] = new Array lineSize
+		matrix[i][0] = p
 
 	i=0
 	while i < tableSize - 1
-		fill i
-		i++
+		fill i++
 
-	matrix[tableSize].push lastPrime * lastPrime
+	lastPrime = listPrimes[tableSize - 1]
+	matrix[tableSize][tableSize] = lastPrime * lastPrime
 	console.timeEnd 'table'
 	matrix
 	
