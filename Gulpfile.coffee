@@ -25,14 +25,7 @@ gulp.task 'css', ->
 		.pipe concat "bundle.css"
 		.pipe gulp.dest 'dist/'
 
-gulp.task 'tests', ['dev'], ->
-	gulp.src './test/*.coffee'
-	.pipe(coffee({bare: true}).on('error', gutil.log))
-	.pipe replace '.coffee', '.js'
-	.pipe gulp.dest './test/dist/'
-
-	gulp.src './test/*.js'
-	.pipe gulp.dest './test/dist/'
+gulp.task "dev", ['coffee','js', 'html', 'css']
 
 gulp.task 'webpack-dev-server', ['dev'], ->
 	myConfig = require './webpack.config.coffee'
@@ -48,7 +41,5 @@ gulp.task 'webpack-dev-server', ['dev'], ->
 	.listen 8003, "localhost", (err) ->
 		if err then throw new gutil.PluginError "webpack-dev-server", err
 		gutil.log "[webpack-dev-server]", "http://localhost:8003/webpack-dev-server/index.html"
-
-gulp.task "dev", ['coffee','js', 'html', 'css']
 
 gulp.task 'default', ['webpack-dev-server']
