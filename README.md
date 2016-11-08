@@ -8,3 +8,5 @@ To test run `npm test`. For more tests run `./test.js`.
 
 To use the html page type `gulp` and point your browser to
 [http://localhost:8003/webpack-dev-server/index.html]
+
+To see it running go to https://ruigazio.github.io/primesMultiplication/

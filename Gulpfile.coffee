@@ -1,10 +1,19 @@
+del              = require 'del'
 gutil            = require 'gutil'
 gulp             = require 'gulp'
 coffee           = require 'gulp-coffee'
 replace          = require 'gulp-replace'
 concat           = require 'gulp-concat'
+gulpWebpack      = require 'gulp-webpack'
 webpack          = require 'webpack'
 webpackDevServer = require "webpack-dev-server"
+
+gulp.task 'clean', ->
+	del [ 'dist/**/*' ]
+
+gulp.task 'html', ['clean'], ->
+	gulp.src 'src/*.html'
+		.pipe gulp.dest 'dist/'
 
 gulp.task 'coffee', ->
 	gulp.src './src/*.coffee'
@@ -16,26 +25,18 @@ gulp.task 'js', ->
 	gulp.src './src/*.js'
 	.pipe gulp.dest './dist/'
 
-gulp.task 'html', ->
-	gulp.src 'src/*.html'
+gulp.task 'webdist', ['html'], ->
+	gulp.src 'src/main.coffee'
+		.pipe gulpWebpack require './webpack.config.dist.coffee'
 		.pipe gulp.dest 'dist/'
 
-gulp.task 'css', ->
-	gulp.src 'src/*.css'
-		.pipe concat "bundle.css"
-		.pipe gulp.dest 'dist/'
-
-gulp.task "dev", ['coffee','js', 'html', 'css']
-
-gulp.task 'webpack-dev-server', ['dev'], ->
+gulp.task 'webpack-dev-server', ['html'], ->
 	myConfig = require './webpack.config.coffee'
-	gulp.watch ["src/**/*.css"], ['css']
 	gulp.watch ["src/**/*.html"], ['html']
-	console.log myConfig
 	new webpackDevServer webpack(myConfig),
 		watch: true
-		publicPath: "/" # + myConfig.output.publicPath,
-		contentBase: "dist" # + myConfig.output.publicPath,
+		publicPath: "/"
+		contentBase: "dist"
 		stats:
 			colors: true
 	.listen 8003, "localhost", (err) ->
